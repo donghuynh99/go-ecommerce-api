@@ -1,0 +1,7 @@
+# Postgresql data
+
+/postgresql_data
+
+# Go sum
+
+go.sum
