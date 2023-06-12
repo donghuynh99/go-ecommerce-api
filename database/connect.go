@@ -3,6 +3,7 @@ package database
 import (
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"github.com/donghuynh99/ecommerce_api/config"
@@ -15,16 +16,14 @@ var Database *gorm.DB
 
 func Connect() {
 	conf := config.GetConfig().PostgresqlConfig
-	dns := fmt.Sprintf("postgres://%s:%s@tcp(%s:%v)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		conf.User, conf.Password, conf.Host, conf.Port, conf.Database,
-	)
+	dns := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Jakarta", conf.Host, conf.User, conf.Password, conf.DB, strconv.Itoa(conf.Port))
 
 	db, err := gorm.Open(postgres.Open(dns), &gorm.Config{
-		Logger: logger.Default.LogMode(logger.Silent),
+		Logger: logger.Default.LogMode(logger.Info),
 	})
 
 	if err != nil {
-		panic("Connect Postgres Fail!")
+		panic(err)
 	}
 
 	d, _ := db.DB()

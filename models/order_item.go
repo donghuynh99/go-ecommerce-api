@@ -5,11 +5,11 @@ import (
 )
 
 type OrderItem struct {
-	ID        string `gorm:"size:36;not null;auto_increment,uniqueIndex;primary_key"`
+	ID        uint `gorm:"primaryKey"`
 	Order     Order
-	OrderID   string `gorm:"size:36;index"`
+	OrderID   uint `gorm:"size:255;index"`
 	Product   Product
-	ProductID string `gorm:"size:36;index"`
+	ProductID uint `gorm:"size:255;index"`
 	Qty       int
 	CreatedAt time.Time
 	UpdatedAt time.Time

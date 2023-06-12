@@ -7,11 +7,11 @@ import (
 )
 
 type Order struct {
-	ID               string `gorm:"size:36;not null;auto_increment;uniqueIndex;primary_key"`
-	UserID           string `gorm:"size:36;index"`
+	ID               uint `gorm:"primaryKey"`
+	UserID           uint `gorm:"size:255;index"`
 	User             User
-	OrderItems       []OrderItem
-	Code             string `gorm:"size:50;index"`
+	OrderItems       []OrderItem `json:"order_items"`
+	Code             string      `gorm:"size:50;index"`
 	Status           int
 	OrderDate        time.Time
 	Note             string `gorm:"type:text"`

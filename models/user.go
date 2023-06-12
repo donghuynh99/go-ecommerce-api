@@ -7,13 +7,18 @@ import (
 )
 
 type User struct {
-	ID            string `gorm:"size:36;not null;auto_increment,uniqueIndex;primary_key"`
-	Address       []Address
-	FirstName     string `gorm:"size:100;not null"`
-	LastName      string `gorm:"size:100;not null"`
-	Email         string `gorm:"size:100;not null;uniqueIndex"`
-	Password      string `gorm:"size:255;not null"`
-	RememberToken string `gorm:"size:255"`
+	ID            uint      `gorm:"primaryKey"`
+	Addresses     []Address `json:"addresses"`
+	Cart          Cart
+	FirstName     string     `gorm:"size:100;not null"`
+	LastName      string     `gorm:"size:100;not null"`
+	Role          string     `gorm:"size:100, not null"`
+	Avatar        Image      `gorm:"polymorphic:Imageable;"`
+	Email         string     `gorm:"size:100;not null;uniqueIndex"`
+	Password      string     `gorm:"size:255;not null"`
+	RememberToken *string    `gorm:"size:255"`
+	Token         *string    `gorm:"size:255"`
+	ExpiredAt     *time.Time `gorm:"default:null"`
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 	DeletedAt     gorm.DeletedAt

@@ -8,14 +8,14 @@ import (
 )
 
 type Product struct {
-	ID           string     `gorm:"size:100;not null;auto_increment,uniqueIndex;primary_key"`
-	Categories   []Category `gorm:"many2many:product_categories"`
-	ProductImage []ProductImage
-	Name         string          `gorm:"size:100;not null"`
-	Slug         string          `gorm:"size:100;not null"`
-	Price        decimal.Decimal `gorm:"type:decimal(16,2)"`
-	Description  string          `gorm:"type:text"`
-	Status       int             `gorm:"default:0"`
+	ID          uint            `gorm:"primaryKey"`
+	Categories  []Category      `gorm:"many2many:product_categories;" json:"categories"`
+	Images      []Image         `gorm:"polymorphic:Imageable;" json:"images"`
+	Name        string          `gorm:"size:100;not null;"`
+	Slug        string          `gorm:"size:100;not null;"`
+	Price       decimal.Decimal `gorm:"type:decimal(16,2);not null;"`
+	Description string          `gorm:"type:text;not null;"`
+	Status      int             `gorm:"default:0;not null;"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
