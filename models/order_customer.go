@@ -3,12 +3,13 @@ package models
 import "time"
 
 type OrderCustomer struct {
-	ID        string `gorm:"size:36;not null;uniqueIndex;primary_key"`
+	ID        uint `gorm:"primaryKey"`
 	User      User
-	UserID    string `gorm:"size:36;index"`
+	UserID    uint `gorm:"size:255;index"`
 	Order     Order
-	OrderID   string `gorm:"size:36;index"`
+	OrderID   uint `gorm:"size:255;index"`
 	Address   Address
+	AddressID uint   `gorm:"size:255;index"`
 	Phone     string `gorm:"size:50;"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
