@@ -17,7 +17,7 @@ func UploadImage(destination string, file *multipart.FileHeader, context *gin.Co
 	err := context.SaveUploadedFile(file, destination+imagesName)
 
 	if err != nil {
-		return "", errors.New("Fail upload")
+		return "", errors.New(Translation("fail_upload", nil, nil))
 	}
 
 	return imagesName, nil
@@ -26,7 +26,7 @@ func UploadImage(destination string, file *multipart.FileHeader, context *gin.Co
 func RemoveImage(filePath string) error {
 	err := os.Remove(filePath)
 	if err != nil {
-		return errors.New("Remove file fail")
+		return errors.New(Translation("remove_file_fail", nil, nil))
 	}
 
 	return nil

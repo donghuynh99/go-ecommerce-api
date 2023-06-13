@@ -1,5 +1,37 @@
 {
     "create_success": "Create sucessful!",
+    "create_fail": "Create fail!",
+    "update_success": "Update sucessful!",
+    "update_fail": "Update fail!",
+    "delete_success": "Delete sucessful!",
+    "delete_fail": "Delete fail!",
     "bad_request": "Bad request",
-    "credential_wrong": "Credential wrong!"
+    "credential_wrong": "Credential wrong!",
+    "not_found": "Not found!",
+    "already_existed": "Already existed!",
+
+    "login_success": "Login successful!",
+
+    "invalid_pagination": "Invalid page or limit value!",
+    "invalid_signature": "Invalid signature!",
+    "invalid_token": "Invalid token!",
+    "change_language_success": "Change language successful!",
+    "fail_parse_json": "Failed to marshal JSON",
+
+    "already_had_children": "This category have children. Please confirm to remove this category",
+
+    "image_limit": "Images cannot greater than {{.Number}}!",
+    "image_type_invalid": "Extension of file is JPEG, PNG, WEBP",
+
+    "register_fail": "Register fail!",
+    "register_success": "Register successful!",
+    "unauthenticate": "Unauthenticate!",
+    "fail_upload": "Upload file fail!",
+    "remove_file_fail": "Remove file fail!",
+
+    "field_required": "This field is required",
+    "invalid_email": "Invalid email",
+    "not_match": "Not match",
+    "must_greather_than": "Must greater than {{.Number}}",
+    "should_be": "Should be {{.Content}}"
 }

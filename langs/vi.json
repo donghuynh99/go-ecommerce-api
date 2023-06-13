@@ -1,3 +1,37 @@
 {
-    "create_success": "Tạo thành công!"
+    "create_success": "Tạo thành công!",
+    "create_fail": "Tạo thất bại!",
+    "update_success": "Cập nhật thành công!",
+    "update_fail": "Cập nhật thất bại!",
+    "delete_success": "Xoá thành công!",
+    "delete_fail": "Xoá thất bại!",
+    "bad_request": "Bad request",
+    "credential_wrong": "Thông tin xác thực không chính xác!",
+    "not_found": "Không tìm thấy!",
+    "already_existed": "Đã tồn tại!",
+
+    "login_success": "Đăng nhập thành công!",
+
+    "invalid_pagination": "Page và Limit không hợp lệ!",
+    "invalid_signature": "Signature không hợp lệ!",
+    "invalid_token": "Token không hợp lệ!",
+    "change_language_success": "Thay đổi ngôn ngữ thành công!",
+    "fail_parse_json": "Lỗi khi chuyển đổi JSON",
+
+    "already_had_children": "Danh mục này có danh mục con. Vui lòng xác nhận trước khi xoá!",
+
+    "image_limit": "Số lượng ảnh không được lớn hơn {{.Number}}!",
+    "image_type_invalid": "Đuôi file phải là JPEG, PNG, WEBP",
+
+    "register_fail": "Đăng ký thất bại!",
+    "register_success": "Đăng ký thành công!",
+    "unauthenticate": "Không được xác thực!",
+    "fail_upload": "Tải ảnh thất bại!",
+    "remove_file_fail": "Xoá ảnh thất bại!",
+
+    "field_required": "Trường này là bắt buộc",
+    "invalid_email": "Email không hợp lệ",
+    "not_match": "Không khớp",
+    "must_greather_than": "Phải lớn hơn {{.Number}}",
+    "should_be": "Phải là {{.Content}}"
 }

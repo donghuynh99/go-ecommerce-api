@@ -38,7 +38,7 @@ func HandleAuthenticate(role string) gin.HandlerFunc {
 
 		if user == nil {
 			c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
-				"message": "Unauthenticate",
+				"message": utils.Translation("unauthenticate", nil, nil),
 			})
 
 			return

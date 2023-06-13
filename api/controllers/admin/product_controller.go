@@ -51,7 +51,7 @@ func (controller *AdminController) ShowProduct(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Product not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -95,10 +95,12 @@ func (controller *AdminController) StoreProduct(c *gin.Context) {
 
 	images := form.File["images"]
 
-	if len(images) > 5 {
+	if len(images) > config.GetConfig().GeneralConfig.ImageLimit {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
-			Param:   "images",
-			Message: "Images cannot greater than 5!",
+			Param: "images",
+			Message: utils.Translation("image_limit", map[string]interface{}{
+				"Number": 5,
+			}, nil),
 		}})
 		return
 	}
@@ -111,7 +113,7 @@ func (controller *AdminController) StoreProduct(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "category_id",
-			Message: "Not found!",
+			Message: utils.Translation("not_found", nil, nil),
 		}})
 		return
 	}
@@ -124,7 +126,7 @@ func (controller *AdminController) StoreProduct(c *gin.Context) {
 	if isNameExisted == nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "name",
-			Message: "Name product already existed",
+			Message: utils.Translation("already_existed", nil, nil),
 		}})
 		return
 	}
@@ -134,7 +136,7 @@ func (controller *AdminController) StoreProduct(c *gin.Context) {
 	imagesModels := []models.Image{}
 
 	for _, file := range images {
-		destination := "assets/products/images/"
+		destination := config.GetConfig().GeneralConfig.DestinationStoreProductImage
 
 		imagesName := utils.GenerateUUID() + file.Filename
 
@@ -163,14 +165,14 @@ func (controller *AdminController) StoreProduct(c *gin.Context) {
 
 	if errSave.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Create fail!",
+			"message": utils.Translation("create_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Create successful!",
+		"message": utils.Translation("create_success", nil, nil),
 		"data":    product,
 	})
 
@@ -206,7 +208,7 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -221,7 +223,7 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 	if err == nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "name",
-			Message: "Already existed!",
+			Message: utils.Translation("already_existed", nil, nil),
 		}})
 		return
 	}
@@ -234,7 +236,7 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "category_id",
-			Message: "Not found!",
+			Message: utils.Translation("not_found", nil, nil),
 		}})
 		return
 	}
@@ -267,10 +269,12 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 		controller.db.Model(&product).Where("name IN ?", request.ImageRemoves).Association("Images").Find(&imageRemoves)
 	}
 
-	if len(product.Images)+len(images)-len(imageRemoves) > 5 {
+	if len(product.Images)+len(images)-len(imageRemoves) > config.GetConfig().GeneralConfig.ImageLimit {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
-			Param:   "images",
-			Message: "Images cannot greater than " + strconv.Itoa(5+len(request.ImageRemoves)-len(product.Images)) + "!",
+			Param: "images",
+			Message: utils.Translation("image_limit", map[string]interface{}{
+				"Number": strconv.Itoa(5 + len(request.ImageRemoves) - len(product.Images)),
+			}, nil),
 		}})
 		return
 	}
@@ -280,7 +284,7 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 		if !utils.IsImageFile(file) {
 			c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 				Param:   "images",
-				Message: "Extension of file is JPEG, PNG, WEBP",
+				Message: utils.Translation("image_type_invalid", nil, nil),
 			}})
 			return
 		}
@@ -310,14 +314,14 @@ func (controller *AdminController) UpdateProduct(c *gin.Context) {
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Update fail!",
+			"message": utils.Translation("update_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Update successful!",
+		"message": utils.Translation("update_success", nil, nil),
 	})
 
 	return
@@ -350,7 +354,7 @@ func (controller *AdminController) UpdateStatusProduct(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -361,14 +365,14 @@ func (controller *AdminController) UpdateStatusProduct(c *gin.Context) {
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Update fail!",
+			"message": utils.Translation("update_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Update successful!",
+		"message": utils.Translation("update_success", nil, nil),
 	})
 
 	return
@@ -384,7 +388,7 @@ func (controller *AdminController) DeleteProduct(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -400,14 +404,14 @@ func (controller *AdminController) DeleteProduct(c *gin.Context) {
 	if result.Error != nil || errImageDelete.Error != nil {
 		log.Panicln(result.Error, errImageDelete.Error)
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Delete fail!",
+			"message": utils.Translation("delete_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Delete successful!",
+		"message": utils.Translation("delete_success", nil, nil),
 	})
 
 	return

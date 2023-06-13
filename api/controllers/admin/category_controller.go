@@ -62,7 +62,7 @@ func (controller *AdminController) StoreCategories(c *gin.Context) {
 		if checkParent.Error != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 				Param:   "parent_id",
-				Message: "Not match with any category!",
+				Message: utils.Translation("not_found", nil, nil),
 			}})
 			return
 		}
@@ -76,7 +76,7 @@ func (controller *AdminController) StoreCategories(c *gin.Context) {
 	if err == nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "name",
-			Message: "Already existed!",
+			Message: utils.Translation("already_existed", nil, nil),
 		}})
 		return
 	}
@@ -91,7 +91,7 @@ func (controller *AdminController) StoreCategories(c *gin.Context) {
 
 	if errStore.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Create failure!",
+			"message": utils.Translation("create_fail", nil, nil),
 			"error":   errStore.Error,
 		})
 
@@ -99,7 +99,7 @@ func (controller *AdminController) StoreCategories(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":  "Create category successful!",
+		"message":  utils.Translation("create_success", nil, nil),
 		"category": category,
 	})
 
@@ -133,7 +133,7 @@ func (controller *AdminController) UpdateCategory(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Category not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -148,7 +148,7 @@ func (controller *AdminController) UpdateCategory(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 			Param:   "name",
-			Message: "Already existed!",
+			Message: utils.Translation("already_existed", nil, nil),
 		}})
 		return
 	}
@@ -161,7 +161,7 @@ func (controller *AdminController) UpdateCategory(c *gin.Context) {
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": utils.ApiError{
 				Param:   "parent_id",
-				Message: "Not match with any category!",
+				Message: utils.Translation("not_found", nil, nil),
 			}})
 			return
 		}
@@ -175,14 +175,14 @@ func (controller *AdminController) UpdateCategory(c *gin.Context) {
 
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Update fail!",
+			"message": utils.Translation("update_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Update successful!",
+		"message": utils.Translation("update_success", nil, nil),
 	})
 
 	return
@@ -198,7 +198,7 @@ func (controller *AdminController) DeleteCategory(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Category not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -208,7 +208,7 @@ func (controller *AdminController) DeleteCategory(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Server error!",
+			"message": err,
 		})
 
 		return
@@ -219,14 +219,14 @@ func (controller *AdminController) DeleteCategory(c *gin.Context) {
 
 		if result.Error != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{
-				"message": "Delete fail!",
+				"message": utils.Translation("delete_fail", nil, nil),
 			})
 
 			return
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Delete successful!",
+			"message": utils.Translation("delete_success", nil, nil),
 		})
 
 		return
@@ -237,7 +237,7 @@ func (controller *AdminController) DeleteCategory(c *gin.Context) {
 	signatureDelete := utils.CreateSignature(keySignature)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "This category have children. Please confirm to remove this category!",
+		"message": utils.Translation("already_had_children", nil, nil),
 		"url":     url + "?signature=" + signatureDelete,
 	})
 
@@ -257,7 +257,7 @@ func (controller *AdminController) ForceDeleteCategory(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{
-			"message": "Category not found!",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -265,7 +265,7 @@ func (controller *AdminController) ForceDeleteCategory(c *gin.Context) {
 
 	if !utils.VerifySignature(keyString, signature) {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Invalid signature",
+			"message": utils.Translation("invalid_signature", nil, nil),
 		})
 
 		return
@@ -276,7 +276,7 @@ func (controller *AdminController) ForceDeleteCategory(c *gin.Context) {
 	controller.db.Select("Products").Delete(&childs)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Force delete successful!",
+		"message": utils.Translation("delete_success", nil, nil),
 	})
 
 	return

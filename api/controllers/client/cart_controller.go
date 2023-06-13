@@ -11,6 +11,7 @@ import (
 	"github.com/donghuynh99/ecommerce_api/api/request"
 	"github.com/donghuynh99/ecommerce_api/config"
 	"github.com/donghuynh99/ecommerce_api/models"
+	"github.com/donghuynh99/ecommerce_api/utils"
 	"github.com/gin-gonic/gin"
 )
 
@@ -47,7 +48,7 @@ func (controller *Controller) UpdateCart(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Update successful",
+		"message": utils.Translation("update_success", nil, nil),
 	})
 
 	return
@@ -91,7 +92,7 @@ func (controller *Controller) GetCart(c *gin.Context) {
 				"id": productID,
 			}, &[]string{"Images"})
 			if err != nil {
-				log.Println(errors.New("ID of product not found!"))
+				log.Println(errors.New(utils.Translation("not_found", nil, nil)))
 
 				continue
 			}
@@ -120,7 +121,7 @@ func (controller *Controller) GetCart(c *gin.Context) {
 				"id": cartItem.ProductID,
 			}, &[]string{"Images"})
 			if err != nil {
-				log.Println(errors.New("ID of product not found!"))
+				log.Println(errors.New(utils.Translation("not_found", nil, nil)))
 
 				continue
 			}
@@ -150,7 +151,7 @@ func (controller *Controller) GetCart(c *gin.Context) {
 func (controller *Controller) UpdateCartForSession(data map[string]int, c *gin.Context) error {
 	jsonData, err := json.Marshal(data)
 	if err != nil {
-		return errors.New("Failed to marshal JSON")
+		return errors.New(utils.Translation("fail_parse_json", nil, nil))
 	}
 
 	cookie := &http.Cookie{
@@ -179,7 +180,7 @@ func (controller *Controller) UpdateCartForUser(data map[string]int, user *model
 			"id": productID,
 		}, nil)
 		if err != nil {
-			return errors.New("ID of product not found!"), http.StatusBadRequest
+			return errors.New(utils.Translation("not_found", nil, nil)), http.StatusBadRequest
 		}
 
 		cartItems = append(cartItems, models.CartItem{
@@ -219,7 +220,7 @@ func (controller *Controller) GetCartOfUser(user *models.User) (models.Cart, err
 	err = controller.db.Create(&newCart).Error
 
 	if err != nil {
-		return models.Cart{}, errors.New("Create fail")
+		return models.Cart{}, errors.New(utils.Translation("create_fail", nil, nil))
 	}
 
 	return newCart, nil

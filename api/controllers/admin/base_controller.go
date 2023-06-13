@@ -6,6 +6,7 @@ import (
 
 	"github.com/donghuynh99/ecommerce_api/config"
 	"github.com/donghuynh99/ecommerce_api/database"
+	"github.com/donghuynh99/ecommerce_api/utils"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -35,40 +36,23 @@ func (controller *AdminController) CheckExisted(model interface{}, conditions ma
 	checkExisted := db.Take(model)
 
 	if checkExisted.Error != nil {
-		return errors.New("Not found!")
+		return errors.New(utils.Translation("not_found", nil, nil))
 	}
 
 	return nil
 }
 
 func (controller *AdminController) GetDataPagination(c *gin.Context) (int, int, int, error) {
-	pageStr := c.DefaultQuery("page", "1")
+	pageStr := c.DefaultQuery("page", config.GetConfig().PaginationConfig.Page)
 	page, errPage := strconv.Atoi(pageStr)
-	limitStr := c.DefaultQuery("limit", "10")
+	limitStr := c.DefaultQuery("limit", config.GetConfig().PaginationConfig.Limit)
 	limit, errLimit := strconv.Atoi(limitStr)
 
 	if errLimit != nil || errPage != nil {
-		return 0, 0, 0, errors.New("Invalid page or limit value")
+		return 0, 0, 0, errors.New(utils.Translation("invalid_pagination", nil, nil))
 	}
 
 	offset := (page - 1) * limit
 
 	return page, limit, offset, nil
-	// var totalCount int64
-
-	// offset := (page - 1) * limit
-	// db := controller.db
-	// if relates != nil {
-	// 	for _, value := range *relates {
-	// 		db = db.Preload(value)
-	// 	}
-	// }
-	// db.Offset(offset).Limit(limit).Find(&items)
-	// db.Count(&totalCount)
-
-	// return PaginationStruct{
-	// 	Data:       items,
-	// 	TotalCount: int(totalCount),
-	// 	Page:       page,
-	// }, nil
 }
