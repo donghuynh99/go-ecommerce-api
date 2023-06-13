@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/donghuynh99/ecommerce_api/config"
 	"github.com/donghuynh99/ecommerce_api/database"
 	"github.com/donghuynh99/ecommerce_api/models"
 	"gorm.io/gorm/clause"
@@ -24,7 +25,7 @@ func GenerateToken(userId int, role string) (string, time.Time, error) {
 	claims["role"] = role
 	claims["exp"] = timeExpiration
 
-	signedTolken, err := token.SignedString([]byte("your-secret-key"))
+	signedTolken, err := token.SignedString([]byte(config.GetConfig().GeneralConfig.KeyToken))
 
 	if err != nil {
 		return "", time.Time{}, err
@@ -34,7 +35,7 @@ func GenerateToken(userId int, role string) (string, time.Time, error) {
 }
 
 func CreateSignature(keyString string) string {
-	key := []byte("your-secret-key")
+	key := []byte(config.GetConfig().GeneralConfig.KeyToken)
 	h := hmac.New(sha256.New, key)
 	h.Write([]byte(keyString))
 	signature := base64.URLEncoding.EncodeToString(h.Sum(nil))
@@ -54,7 +55,7 @@ func ValidateToken(tokenString string, role string) (models.User, error) {
 			return nil, fmt.Errorf("unexpected signing method: %v", t.Header["alg"])
 		}
 
-		return []byte("your-secret-key"), nil
+		return []byte(config.GetConfig().GeneralConfig.KeyToken), nil
 	})
 
 	if err != nil {
@@ -81,5 +82,5 @@ func ValidateToken(tokenString string, role string) (models.User, error) {
 		}
 	}
 
-	return models.User{}, errors.New("Invalid token")
+	return models.User{}, errors.New(Translation("invalid_token", nil, nil))
 }

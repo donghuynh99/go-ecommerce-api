@@ -19,19 +19,23 @@ type ApiError struct {
 func MsgForTag(fe validator.FieldError) string {
 	switch fe.Tag() {
 	case "required":
-		return "This field is required"
+		return Translation("field_required", nil, nil)
 	case "email":
-		return "Invalid email"
+		return Translation("invalid_email", nil, nil)
 	case "eqfield":
-		return "Not match!"
+		return Translation("not_match", nil, nil)
 	case "uniqueEmail":
-		return "Email already existed!"
+		return Translation("already_existed", nil, nil)
 	case "gt":
-		return "Must greater than " + fe.Param()
+		return Translation("must_greather_than", map[string]interface{}{
+			"Number": fe.Param(),
+		}, nil)
 	case "arrayIn":
 		alloweds := strings.Split(fe.Param(), "&")
 
-		return "Should be " + strings.Join(alloweds, " or ")
+		return Translation("should_be", map[string]interface{}{
+			"Content": strings.Join(alloweds, " or "),
+		}, nil)
 	}
 	return fe.Error()
 }

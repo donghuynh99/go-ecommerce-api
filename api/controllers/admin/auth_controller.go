@@ -113,7 +113,7 @@ func (controller *AdminController) Logout(c *gin.Context) {
 
 	if !ok {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Not found user",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -123,7 +123,7 @@ func (controller *AdminController) Logout(c *gin.Context) {
 
 	if !ok {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Not found user",
+			"message": utils.Translation("not_found", nil, nil),
 		})
 
 		return
@@ -134,7 +134,7 @@ func (controller *AdminController) Logout(c *gin.Context) {
 	controller.db.Save(&userModel)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Logout successful!",
+		"message": utils.Translation("login_success", nil, nil),
 	})
 
 	return

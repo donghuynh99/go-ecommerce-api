@@ -1,6 +1,7 @@
 package client
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/donghuynh99/ecommerce_api/api/request"
@@ -31,35 +32,35 @@ func (controller *Controller) Register(c *gin.Context) {
 
 	password, _ := utils.HashPassword(request.Password)
 
-	// cartData := utils.GetCartDataFromCookie(c)
+	cartData := utils.GetCartDataFromCookie(c)
 
-	// var cartItems []models.CartItem
+	var cartItems []models.CartItem
 
-	// for productID, quantity := range cartData {
-	// 	var product models.Product
-	// 	err := controller.CheckExisted(&product, map[string]interface{}{
-	// 		"id": productID,
-	// 	}, nil)
-	// 	if err != nil {
-	// 		log.Println(err)
+	for productID, quantity := range cartData {
+		var product models.Product
+		err := controller.CheckExisted(&product, map[string]interface{}{
+			"id": productID,
+		}, nil)
+		if err != nil {
+			log.Println(err)
 
-	// 		continue
-	// 	}
+			continue
+		}
 
-	// 	cartItems = append(cartItems, models.CartItem{
-	// 		ProductID: product.ID,
-	// 		Qty:       quantity,
-	// 	})
-	// }
+		cartItems = append(cartItems, models.CartItem{
+			ProductID: product.ID,
+			Qty:       quantity,
+		})
+	}
 
 	user := models.User{
 		Addresses: []models.Address{},
 		FirstName: request.FirstName,
 		LastName:  request.LastName,
 		Email:     request.Email,
-		// Cart: models.Cart{
-		// 	CartItems: cartItems,
-		// },
+		Cart: models.Cart{
+			CartItems: cartItems,
+		},
 		Role:     config.GetConfig().RoleConfig.User,
 		Password: password,
 	}
@@ -68,14 +69,14 @@ func (controller *Controller) Register(c *gin.Context) {
 
 	if result.Error != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
-			"message": "Register user fail!",
+			"message": utils.Translation("register_fail", nil, nil),
 		})
 
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Register successful!",
+		"message": utils.Translation("register_success", nil, nil),
 		"user":    user,
 	})
 

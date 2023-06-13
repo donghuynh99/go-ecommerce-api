@@ -6,6 +6,7 @@ import (
 
 	"github.com/donghuynh99/ecommerce_api/config"
 	"github.com/donghuynh99/ecommerce_api/database"
+	"github.com/donghuynh99/ecommerce_api/utils"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/exp/slices"
 	"gorm.io/gorm"
@@ -36,7 +37,7 @@ func (controller *Controller) CheckExisted(model interface{}, conditions map[str
 	checkExisted := db.Take(model)
 
 	if checkExisted.Error != nil {
-		return errors.New("Not found!")
+		return errors.New(utils.Translation("not_found", nil, nil))
 	}
 
 	return nil
@@ -58,7 +59,7 @@ func ChangeLocale(c *gin.Context) {
 	http.SetCookie(c.Writer, cookie)
 
 	c.JSON(http.StatusOK, gin.H{
-		"message": "Change language successful!",
+		"message": utils.Translation("change_language_success", nil, nil),
 	})
 
 	return

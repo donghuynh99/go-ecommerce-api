@@ -6,6 +6,8 @@ type Config struct {
 	PostgresqlConfig PostgresqlConfig
 	AppConfig        AppConfig
 	RoleConfig       RoleConfig
+	PaginationConfig PaginationConfig
+	GeneralConfig    GeneralConfig
 }
 
 type PostgresqlConfig struct {
@@ -19,6 +21,17 @@ type PostgresqlConfig struct {
 type RoleConfig struct {
 	Admin string `default:"admin"`
 	User  string `default:"user"`
+}
+
+type PaginationConfig struct {
+	Limit string `default:"10"`
+	Page  string `default:"1"`
+}
+
+type GeneralConfig struct {
+	ImageLimit                   int    `default:"5"`
+	DestinationStoreProductImage string `default:"assets/products/images/"`
+	KeyToken                     string `default:"private"`
 }
 
 type AppConfig struct {

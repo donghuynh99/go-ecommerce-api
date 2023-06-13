@@ -26,10 +26,18 @@ func Translation(messageId string, data map[string]interface{}, counter interfac
 		data = make(map[string]interface{})
 	}
 
+	var pluralCount int
+
+	if counter == nil {
+		pluralCount = 1
+	} else {
+		pluralCount = counter.(int)
+	}
+
 	translation := localizer.MustLocalize(&i18n.LocalizeConfig{
 		MessageID:    messageId,
-		TemplateData: nil,
-		PluralCount:  nil,
+		TemplateData: data,
+		PluralCount:  pluralCount,
 	})
 
 	return translation
