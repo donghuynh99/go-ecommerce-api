@@ -108,6 +108,7 @@ func (controller *Controller) GetCart(c *gin.Context) {
 				ProductName: product.Name,
 				Thumbnail:   thumbnail,
 				Quantity:    quantity,
+				Price:       product.Price,
 			})
 		}
 
@@ -137,6 +138,7 @@ func (controller *Controller) GetCart(c *gin.Context) {
 				ProductName: product.Name,
 				Thumbnail:   thumbnail,
 				Quantity:    cartItem.Qty,
+				Price:       product.Price,
 			})
 		}
 	}

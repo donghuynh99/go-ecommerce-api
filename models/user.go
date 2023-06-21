@@ -9,6 +9,7 @@ import (
 type User struct {
 	ID            uint      `gorm:"primaryKey"`
 	Addresses     []Address `json:"addresses"`
+	Orders        []Order   `json:"orders"`
 	Cart          Cart
 	FirstName     string     `gorm:"size:100;not null"`
 	LastName      string     `gorm:"size:100;not null"`

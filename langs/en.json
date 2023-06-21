@@ -33,5 +33,13 @@
     "invalid_email": "Invalid email",
     "not_match": "Not match",
     "must_greather_than": "Must greater than {{.Number}}",
+    "must_boolean": "Must boolean type",
+    "must_have_primary_address": "Must be a primary address",
+    "server_error": "Server got errors!",
+    "warning_address_order": "Please add an address before ordering",
+    "add_more_items": "Please add some items to your cart before ordering",
+    "condition_cancel": "Your order can only be canceled while the status is pending",
+    "cancel_order_fail": "Cancel order fail!",
+    "cancel_order_success": "Cancel order successful!",
     "should_be": "Should be {{.Content}}"
 }

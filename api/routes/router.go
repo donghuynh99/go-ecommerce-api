@@ -88,4 +88,20 @@ func UserRoutes(router *gin.RouterGroup) {
 
 	// authentication route
 	router.Use(middleware.HandleAuthenticate(config.GetConfig().RoleConfig.User))
+
+	address := router.Group("/addresses")
+	{
+		address.GET("/", clientController.ListAddress)
+		address.POST("/", clientController.AddAddress)
+		address.PUT("/:id", clientController.UpdateAddress)
+		address.DELETE("/:id", clientController.RemoveAddress)
+	}
+
+	order := router.Group("/orders")
+	{
+		order.GET("/", clientController.ListMyOrder)
+		order.POST("/", clientController.HandleOrder)
+		order.GET("/:id", clientController.ShowOrder)
+		order.PATCH("/:id/cancel-order", clientController.CancelOrder)
+	}
 }
