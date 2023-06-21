@@ -1,13 +1,19 @@
 package config
 
-import "github.com/kelseyhightower/envconfig"
+import (
+	"time"
+
+	"github.com/kelseyhightower/envconfig"
+	"github.com/shopspring/decimal"
+)
 
 type Config struct {
-	PostgresqlConfig PostgresqlConfig
-	AppConfig        AppConfig
-	RoleConfig       RoleConfig
-	PaginationConfig PaginationConfig
-	GeneralConfig    GeneralConfig
+	PostgresqlConfig  PostgresqlConfig
+	AppConfig         AppConfig
+	RoleConfig        RoleConfig
+	PaginationConfig  PaginationConfig
+	GeneralConfig     GeneralConfig
+	StatusOrderConfig StatusOrderConfig
 }
 
 type PostgresqlConfig struct {
@@ -32,6 +38,13 @@ type GeneralConfig struct {
 	ImageLimit                   int    `default:"5"`
 	DestinationStoreProductImage string `default:"assets/products/images/"`
 	KeyToken                     string `default:"private"`
+}
+
+type StatusOrderConfig struct {
+	Pending   string `default:"pending"`
+	Approved  string `default:"approved"`
+	Completed string `default:"completed"`
+	Canceled  string `default:"canceled"`
 }
 
 type AppConfig struct {
@@ -67,7 +80,54 @@ type PaginationStruct struct {
 }
 
 type CartInformation struct {
-	ProductName string `json:"product_name"`
-	Thumbnail   string `json:"product_thumbnail"`
-	Quantity    int    `json:"quantity"`
+	ProductName string          `json:"product_name"`
+	Thumbnail   string          `json:"product_thumbnail"`
+	Quantity    int             `json:"quantity"`
+	Price       decimal.Decimal `json:"price"`
+}
+
+type ProductJsonStruct struct {
+	ID           uint               `json:"id"`
+	Name         string             `json:"name"`
+	Price        decimal.Decimal    `json:"price"`
+	Description  string             `json:"description"`
+	ThumbnailURL ThumbnailURLStruct `json:"thumbnail_url"`
+}
+
+type OrderJsonStruct struct {
+	ID               uint                  `json:"id"`
+	Address          AddressJsonStruct     `json:"address"`
+	OrderItems       []OrderItemJsonStruct `json:"order_items"`
+	Note             string                `json:"note"`
+	ApprovedBy       *uint                 `gorm:"size:255;index"`
+	ApprovedAt       *time.Time            `json:"approved_at"`
+	CompletedAt      *time.Time            `json:"completed_at"`
+	CancelledBy      *uint                 `json:"cancelled_by"`
+	CancelledAt      *time.Time            `json:"cancelled_at"`
+	CancellationNote *string               `json:"cancellation_note"`
+}
+
+type AddressJsonStruct struct {
+	ID       uint   `json:"id"`
+	Name     string `json:"name"`
+	PostCode string `json:"post_code"`
+}
+
+type OrderItemJsonStruct struct {
+	Name         string             `json:"name"`
+	ThumbnailURL ThumbnailURLStruct `json:"thumbnail_url"`
+	Price        decimal.Decimal    `json:"price"`
+	Quantity     int                `json:"quantity"`
+}
+
+type ThumbnailURLStruct struct {
+	Path string `json:"path"`
+	Alt  string `json:"alt"`
+}
+
+type AddressListStruct struct {
+	ID        uint   `json:"id"`
+	Name      string `json:"name"`
+	IsPrimary bool   `json:"is_primary"`
+	PostCode  string `json:"post_code"`
 }

@@ -3,6 +3,7 @@ package client
 import (
 	"net/http"
 
+	"github.com/donghuynh99/ecommerce_api/config"
 	"github.com/donghuynh99/ecommerce_api/models"
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,31 @@ func (controller *Controller) GetPopularProducts(c *gin.Context) {
 		})
 	}
 
+	var results []config.ProductJsonStruct
+
+	for _, product := range products {
+		thumbnailURL := config.ThumbnailURLStruct{
+			Path: config.GetConfig().AppConfig.DefaultImageURL,
+			Alt:  "default_image",
+		}
+
+		if len(product.Images) > 0 {
+			thumbnailURL = config.ThumbnailURLStruct{
+				Path: product.Images[0].Path,
+				Alt:  product.Images[0].Alt,
+			}
+		}
+
+		results = append(results, config.ProductJsonStruct{
+			ID:           product.ID,
+			Name:         product.Name,
+			Price:        product.Price,
+			Description:  product.Description,
+			ThumbnailURL: thumbnailURL,
+		})
+	}
+
 	c.JSON(http.StatusOK, gin.H{
-		"data": products,
+		"data": results,
 	})
 }

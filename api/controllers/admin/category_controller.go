@@ -99,8 +99,8 @@ func (controller *AdminController) StoreCategories(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"message":  utils.Translation("create_success", nil, nil),
-		"category": category,
+		"message": utils.Translation("create_success", nil, nil),
+		"data":    category,
 	})
 
 	return

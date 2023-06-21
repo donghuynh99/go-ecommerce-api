@@ -11,7 +11,6 @@ func RegisteredModel() []Model {
 		{Model: Product{}},
 		{Model: Address{}},
 		{Model: Category{}},
-		{Model: OrderCustomer{}},
 		{Model: OrderItem{}},
 		{Model: Order{}},
 		{Model: Cart{}},

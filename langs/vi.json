@@ -33,5 +33,13 @@
     "invalid_email": "Email không hợp lệ",
     "not_match": "Không khớp",
     "must_greather_than": "Phải lớn hơn {{.Number}}",
+    "must_boolean": "Phải là kiểu true/false",
+    "must_have_primary_address": "Phải có một địa chỉ chính",
+    "server_error": "Máy chủ gặp lỗi!",
+    "warning_address_order": "Thêm địa chỉ trước khi đặt hàng",
+    "add_more_items": "Thêm vài sản phẩm vào giỏ hàng trước khi đặt hàng",
+    "condition_cancel": "Đơn hàng chỉ có thể huỷ khi đang trong trạng thái chờ",
+    "cancel_order_fail": "Huỷ đơn hàng thất bại!",
+    "cancel_order_success": "Huỷ đơn hàng thành công!",
     "should_be": "Phải là {{.Content}}"
 }

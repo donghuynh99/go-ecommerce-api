@@ -29,7 +29,7 @@ func Translation(messageId string, data map[string]interface{}, counter interfac
 	var pluralCount int
 
 	if counter == nil {
-		pluralCount = 1
+		pluralCount = 0
 	} else {
 		pluralCount = counter.(int)
 	}

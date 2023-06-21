@@ -26,6 +26,8 @@ func MsgForTag(fe validator.FieldError) string {
 		return Translation("not_match", nil, nil)
 	case "uniqueEmail":
 		return Translation("already_existed", nil, nil)
+	case "boolean":
+		return Translation("must_boolean", nil, nil)
 	case "gt":
 		return Translation("must_greather_than", map[string]interface{}{
 			"Number": fe.Param(),
