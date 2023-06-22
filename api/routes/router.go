@@ -89,6 +89,10 @@ func UserRoutes(router *gin.RouterGroup) {
 	// authentication route
 	router.Use(middleware.HandleAuthenticate(config.GetConfig().RoleConfig.User))
 
+	router.GET("/profile", clientController.ShowProfile)
+	router.PUT("/profile", clientController.UpdateProfile)
+	router.PUT("/profile/avatar", clientController.UpdateAvatar)
+
 	address := router.Group("/addresses")
 	{
 		address.GET("/", clientController.ListAddress)

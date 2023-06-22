@@ -41,5 +41,7 @@
     "condition_cancel": "Đơn hàng chỉ có thể huỷ khi đang trong trạng thái chờ",
     "cancel_order_fail": "Huỷ đơn hàng thất bại!",
     "cancel_order_success": "Huỷ đơn hàng thành công!",
+    "password_not_correct": "Mật khẩu cũ không chính xác!",
+    "just_one_avatar": "Hãy chọn 1 ảnh để làm ảnh đại diện",
     "should_be": "Phải là {{.Content}}"
 }

@@ -20,6 +20,8 @@ func MsgForTag(fe validator.FieldError) string {
 	switch fe.Tag() {
 	case "required":
 		return Translation("field_required", nil, nil)
+	case "required_with":
+		return Translation("field_required", nil, nil)
 	case "email":
 		return Translation("invalid_email", nil, nil)
 	case "eqfield":

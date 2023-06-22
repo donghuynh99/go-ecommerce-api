@@ -42,13 +42,13 @@ func (order *Order) FormatOrder() config.OrderJsonStruct {
 	var orderItemsJSON []config.OrderItemJsonStruct
 
 	for _, orderItem := range order.OrderItems {
-		thumbnailURL := config.ThumbnailURLStruct{
+		thumbnailURL := config.ImageStruct{
 			Path: config.GetConfig().AppConfig.DefaultImageURL,
 			Alt:  "default_image",
 		}
 
 		if len(orderItem.Product.Images) > 0 {
-			thumbnailURL = config.ThumbnailURLStruct{
+			thumbnailURL = config.ImageStruct{
 				Path: orderItem.Product.Images[0].Path,
 				Alt:  orderItem.Product.Images[0].Alt,
 			}
