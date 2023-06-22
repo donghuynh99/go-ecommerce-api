@@ -1,0 +1,38 @@
+{
+	"id": "c3acfff5-7211-4a9f-944d-32fb8d409539",
+	"name": "Ecommerce golang",
+	"values": [
+		{
+			"key": "apiUrl",
+			"value": "localhost:8080/api",
+			"enabled": true
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIyMDIzLTA2LTA3VDIzOjEyOjMxLjM4ODQwNiswNzowMCIsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjF9.Llgtlkr3sIUEUQUwKg3eR0lly02x5ZSD3odPYXuSdN8",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "token_user",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOiIyMDIzLTA2LTI1VDIyOjI1OjAyLjk4NjU5NCswNzowMCIsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6Mn0.SZ0j1kV9-Qanh92MJ35HW7i2QJPo-HYIcg7-6yW5B_4",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "localhost:8080",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "imageUrl",
+			"value": "assets/products/images/c89d025a-54b5-47d4-8118-88af2b3c2691Screen Shot 2023-04-14 at 15.31.53.png",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2023-06-22T08:29:12.927Z",
+	"_postman_exported_using": "Postman/10.14.5"
+}
