@@ -41,5 +41,7 @@
     "condition_cancel": "Your order can only be canceled while the status is pending",
     "cancel_order_fail": "Cancel order fail!",
     "cancel_order_success": "Cancel order successful!",
+    "password_not_correct": "Old password not correct!",
+    "just_one_avatar": "Please give an image for avatar",
     "should_be": "Should be {{.Content}}"
 }

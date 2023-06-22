@@ -37,6 +37,7 @@ type PaginationConfig struct {
 type GeneralConfig struct {
 	ImageLimit                   int    `default:"5"`
 	DestinationStoreProductImage string `default:"assets/products/images/"`
+	DestinationStoreAvatarUser   string `default:"assets/avatar/"`
 	KeyToken                     string `default:"private"`
 }
 
@@ -48,10 +49,11 @@ type StatusOrderConfig struct {
 }
 
 type AppConfig struct {
-	AppName         string `envconfig:"APP_NAME" required:"false" default:"Ecommerce API"`
-	AppPort         int    `envconfig:"APP_PORT" required:"false" default:"8080"`
-	AppURL          string `envconfig:"APP_URL" required:"false" default:"http://localhost:8080"`
-	DefaultImageURL string `envconfig:"DEFAULT_IMAGE_URL" required:"false" default:"assets/default_image.jpeg"`
+	AppName          string `envconfig:"APP_NAME" required:"false" default:"Ecommerce API"`
+	AppPort          int    `envconfig:"APP_PORT" required:"false" default:"8080"`
+	AppURL           string `envconfig:"APP_URL" required:"false" default:"http://localhost:8080"`
+	DefaultImageURL  string `envconfig:"DEFAULT_IMAGE_URL" required:"false" default:"assets/default_image.jpeg"`
+	DefaultAvatarURL string `envconfig:"DEFAULT_AVATAR_URL" required:"false" default:"assets/default_avatar.jpeg"`
 }
 
 var c *Config
@@ -87,11 +89,11 @@ type CartInformation struct {
 }
 
 type ProductJsonStruct struct {
-	ID           uint               `json:"id"`
-	Name         string             `json:"name"`
-	Price        decimal.Decimal    `json:"price"`
-	Description  string             `json:"description"`
-	ThumbnailURL ThumbnailURLStruct `json:"thumbnail_url"`
+	ID           uint            `json:"id"`
+	Name         string          `json:"name"`
+	Price        decimal.Decimal `json:"price"`
+	Description  string          `json:"description"`
+	ThumbnailURL ImageStruct     `json:"thumbnail_url"`
 }
 
 type OrderJsonStruct struct {
@@ -114,13 +116,13 @@ type AddressJsonStruct struct {
 }
 
 type OrderItemJsonStruct struct {
-	Name         string             `json:"name"`
-	ThumbnailURL ThumbnailURLStruct `json:"thumbnail_url"`
-	Price        decimal.Decimal    `json:"price"`
-	Quantity     int                `json:"quantity"`
+	Name         string          `json:"name"`
+	ThumbnailURL ImageStruct     `json:"thumbnail_url"`
+	Price        decimal.Decimal `json:"price"`
+	Quantity     int             `json:"quantity"`
 }
 
-type ThumbnailURLStruct struct {
+type ImageStruct struct {
 	Path string `json:"path"`
 	Alt  string `json:"alt"`
 }
@@ -130,4 +132,12 @@ type AddressListStruct struct {
 	Name      string `json:"name"`
 	IsPrimary bool   `json:"is_primary"`
 	PostCode  string `json:"post_code"`
+}
+
+type ProfileStruct struct {
+	FirstName string              `json:"first_name"`
+	LastName  string              `json:"last_name"`
+	Avatar    ImageStruct         `json:"avatar"`
+	Email     string              `json:"email"`
+	Addresses []AddressListStruct `json:"addresses"`
 }

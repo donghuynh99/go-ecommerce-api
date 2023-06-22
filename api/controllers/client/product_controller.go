@@ -22,13 +22,13 @@ func (controller *Controller) GetPopularProducts(c *gin.Context) {
 	var results []config.ProductJsonStruct
 
 	for _, product := range products {
-		thumbnailURL := config.ThumbnailURLStruct{
+		thumbnailURL := config.ImageStruct{
 			Path: config.GetConfig().AppConfig.DefaultImageURL,
 			Alt:  "default_image",
 		}
 
 		if len(product.Images) > 0 {
-			thumbnailURL = config.ThumbnailURLStruct{
+			thumbnailURL = config.ImageStruct{
 				Path: product.Images[0].Path,
 				Alt:  product.Images[0].Alt,
 			}
